@@ -1,17 +1,18 @@
 import { useState } from "react";
-import Logo from "../assets/img/food_villa.jpg"
+import Logo from "../assets/img/food_villa.jpg";
+import { Link } from "react-router-dom";
 const LoggedInUser = () => {
   return true;
 };
 const Title = () => {
   return (
-    <a href="/">
+    <Link to="/">
       <img
         className="logo"
         alt="logo"
         src={Logo}
       />
-    </a>
+    </Link>
   );
 };
 const Header = () => {
@@ -21,10 +22,10 @@ const Header = () => {
       <Title />
       <div className="nav-items">
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact Us</li>
-          <li>Cart</li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
+          <li><Link>Cart</Link></li>
         </ul>
       </div>
       {isLoggedIn ? (
