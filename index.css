@@ -389,4 +389,7 @@ body {
     }
   }
   
-  
+  /* Styles for RestaurentMenu component */
+.menu {
+  display: flex;
+}
