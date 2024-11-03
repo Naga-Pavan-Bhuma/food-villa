@@ -6,6 +6,8 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
+import Profile from "./components/Profile";
+import ProfileClass from "./components/ProfileClass"
 import RestaurentMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 /*
@@ -49,7 +51,17 @@ const appRouter=createBrowserRouter([
       },
       {
         path:"/about",
-        element:<About/>
+        element:<About/>,
+        children:[
+          {
+          path:"profile",
+          element:<Profile/>
+          },
+          {
+            path:"profileclass",
+            element:<ProfileClass/>
+          }
+        ]
       },
       {
         path:"/contact",
