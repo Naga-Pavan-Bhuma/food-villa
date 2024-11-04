@@ -1,39 +1,26 @@
-import { RestaurantList } from "../Config";
 import Shimmer from "./Shimmer";
 import RestaurantCard from "./RestaurantCard";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import useRestaurantCards from "../utils/useRestaurantCards";
+import { filterData } from "../utils/helper";
+
 const Body = () => {
-  const [searchText, setSearchText] = useState([]);
-  const [restaurants, setAllRestaurants] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const restaurants = useRestaurantCards(); // Fetch restaurant data
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-  function filterData(searchText, restaurants) {
-    const filteredData = restaurants.filter((restaurant) =>
-      restaurant?.info?.name?.toLowerCase()?.includes(searchText.toLowerCase())
-    );
-    return filteredData;
-  }
+
+  // Update filteredRestaurants when restaurants data is loaded
   useEffect(() => {
-    getRestaurants();
-  }, []);
-  console.log("render");
-  async function getRestaurants() {
-    const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.37240&lng=78.43780&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-    );
-    const json = await data.json();
-    console.log(json);
-    setAllRestaurants(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-    setFilteredRestaurants(
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    );
-  }
-  if (!restaurants) return null;
-  return restaurants.length === 0 ? (
-    <Shimmer />
-  ) : (
+    if (restaurants && Array.isArray(restaurants)) {
+      setFilteredRestaurants(restaurants);
+    }
+  }, [restaurants]);
+
+  // Show Shimmer while restaurants data is still loading or not yet available
+  if (!restaurants || restaurants.length === 0) return <Shimmer />;
+
+  return (
     <>
       <div className="search-container">
         <input
@@ -41,9 +28,7 @@ const Body = () => {
           className="search-input"
           placeholder="Search"
           value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value);
-          }}
+          onChange={(e) => setSearchText(e.target.value)}
         />
         <button
           className="search-btn"
@@ -59,17 +44,15 @@ const Body = () => {
         {filteredRestaurants.length === 0 ? (
           <h2>No Restaurants Found</h2>
         ) : (
-          filteredRestaurants.map((restaurant) => {
-            return (
-              <Link to={"/restaurant/"+restaurant.info.id} 
-              key={restaurant.info.id}><RestaurantCard
-                restaurant={restaurant}
-              /></Link>
-            );
-          })
+          filteredRestaurants.map((restaurant) => (
+            <Link to={`/restaurant/${restaurant.info.id}`} key={restaurant.info.id}>
+              <RestaurantCard restaurant={restaurant} />
+            </Link>
+          ))
         )}
       </div>
     </>
   );
 };
+
 export default Body;
