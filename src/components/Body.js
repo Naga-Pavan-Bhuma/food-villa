@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useRestaurantCards from "../utils/useRestaurantCards";
 import { filterData } from "../utils/helper";
-
+import useOnline from "../utils/useOnline";
 const Body = () => {
+
   const [searchText, setSearchText] = useState("");
   const restaurants = useRestaurantCards(); // Fetch restaurant data
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
-
+  
   // Update filteredRestaurants when restaurants data is loaded
   useEffect(() => {
     if (restaurants && Array.isArray(restaurants)) {
@@ -17,9 +18,14 @@ const Body = () => {
     }
   }, [restaurants]);
 
+  
+  const isOnline=useOnline();
+  if(!isOnline){
+    return <h1>Check your Internet connection</h1>
+  }
+  else{
   // Show Shimmer while restaurants data is still loading or not yet available
   if (!restaurants || restaurants.length === 0) return <Shimmer />;
-
   return (
     <>
       <div className="search-container">
@@ -53,6 +59,7 @@ const Body = () => {
       </div>
     </>
   );
+};
 };
 
 export default Body;

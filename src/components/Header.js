@@ -26,6 +26,7 @@ const Header = () => {
           <li><Link to="/about">About</Link></li>
           <li><Link to="/contact">Contact Us</Link></li>
           <li><Link>Cart</Link></li>
+          <li><Link to="/instamart">Insta Mart</Link></li>
         </ul>
       </div>
       {isLoggedIn ? (
