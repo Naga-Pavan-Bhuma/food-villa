@@ -11,7 +11,7 @@ import ProfileClass from "./components/ProfileClass"
 import RestaurentMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Shimmer from "./components/Shimmer";
-const InstaMart=lazy(()=>import("./components/instamart"))
+const InstaMart=lazy(()=>import("./components/InstaMart"))
 /*
         Header
           -Logo
