@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Logo from "../assets/img/food_villa.jpg";
 import { Link } from "react-router-dom";
+import UserContext from "../utils/UserContext";
 
 const Title = () => {
   return (
@@ -17,7 +18,7 @@ const Title = () => {
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // state to manage the menu visibility
-
+  const {user}=useContext(UserContext);
   return (
     <div className="flex items-center justify-between px-4 py-2 bg-gradient-to-r from-cyan-200 via-cyan-300 to-cyan-400 shadow-lg rounded-md">
       {/* Title Section */}
@@ -83,7 +84,6 @@ const Header = () => {
               Insta Mart
             </Link>
           </nav>
-
           {/* Login/Logout Button */}
           <button
             onClick={() => setIsLoggedIn(!isLoggedIn)}
@@ -135,7 +135,8 @@ const Header = () => {
           Insta Mart
           <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-indigo-900 transition-all group-hover:w-full"></span>
         </Link>
-
+            
+          {user.name}
         {/* Login/Logout Button */}
         <button
           onClick={() => setIsLoggedIn(!isLoggedIn)}

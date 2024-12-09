@@ -23,7 +23,7 @@ const Section = ({ title, description, isVisible, setIsVisible }) => {
 };
 
 const InstaMart = () => {
-  const [visibleSection, setVisibleSection] = useState("team");
+  const [visibleSection, setVisibleSection] = useState("about");
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-md">

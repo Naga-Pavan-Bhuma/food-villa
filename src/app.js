@@ -8,9 +8,11 @@ import Contact from "./components/Contact";
 import Error from "./components/Error";
 import Profile from "./components/Profile";
 import ProfileClass from "./components/ProfileClass"
+import { useState } from "react";
 import RestaurentMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Shimmer from "./components/Shimmer";
+import UserContext from "./utils/UserContext";
 const InstaMart=lazy(()=>import("./components/InstaMart"))
 /*
         Header
@@ -32,11 +34,21 @@ const InstaMart=lazy(()=>import("./components/InstaMart"))
      */
 
 const AppLayout = () => {
+  const [user, setUser]=useState({
+    name:"Bhuma Naga Pavan",
+    email:"bhumanagapavan@gmail.com",
+  })
   return (
     <>
+    <UserContext.Provider value={{
+      user:user,
+      setUser:setUser,
+    }
+    }>
       <Header />
       <Outlet />
       <Footer />
+      </UserContext.Provider>
     </>
   );
 };

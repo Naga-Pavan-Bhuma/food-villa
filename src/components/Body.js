@@ -1,15 +1,17 @@
 import Shimmer from "./Shimmer";
 import RestaurantCard from "./RestaurantCard";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useRestaurantCards from "../utils/useRestaurantCards";
 import { filterData } from "../utils/helper";
 import useOnline from "../utils/useOnline";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
   const restaurants = useRestaurantCards();
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     if (restaurants && Array.isArray(restaurants)) {
@@ -21,14 +23,40 @@ const Body = () => {
   if (!isOnline) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <h1 className="text-3xl font-semibold text-red-500">Check your Internet connection</h1>
+        <h1 className="text-3xl font-semibold text-red-500">
+          Check your Internet connection
+        </h1>
       </div>
     );
   } else {
     if (!restaurants || restaurants.length === 0) return <Shimmer />;
-    
+    /*
+  <div className="relative w-full max-w-md">
+            <input
+              type="text"
+              className="w-full py-3 px-5 rounded-full text-gray-800 border border-gray-300 focus:outline-none focus:ring-4 focus:ring-cyan-300 transition duration-300"
+              placeholder={user.name}
+              value={user.name}
+              onChange={(e) =>
+                setUser({
+                  name: e.target.value,
+                })
+              }
+            />
+            <button
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 px-4 py-2 bg-cyan-600 text-white rounded-full hover:bg-cyan-700 transition duration-200 ease-in-out"
+              onClick={() => {
+                const data = filterData(searchText, restaurants);
+                setFilteredRestaurants(data);
+              }}
+            >
+              Search
+            </button>
+          </div>
+*/
     return (
       <>
+      
         <div className="flex items-center justify-center space-y-6 py-10">
           <div className="relative w-full max-w-md">
             <input
@@ -48,6 +76,7 @@ const Body = () => {
               Search
             </button>
           </div>
+          
         </div>
 
         <div className="container mx-auto py-10 px-4">
